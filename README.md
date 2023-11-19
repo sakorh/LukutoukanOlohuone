@@ -10,3 +10,9 @@ Lukutoukan olohuone on kaikkialla mukana kulkeva kirjasto, jossa asiakkaat voiva
 * Asiakas voi etsiä kaikki kirjat, joiden nimessä on annettu sana, tai valita nähtäväkseen vain jonkun tietyn kirjailijan kirjat
 * Ylläpitäjä voi poistaa ja lisätä uusia kirjoja hyllyyn
 * Ylläpitäjä voi nähdä tilaston kirjojen lainausmääristä
+
+## Sovelluksessa on tällä hetkellä seuraavat toiminnot:
+* Käyttäjä voi kirjautua sisään ja ulos, ja rekisteröidä uuden tunnuksen
+* Käyttäjä näkee etusivulla listan kirjoista
+* Jos kirja ei ole kellään lainassa, käyttäjä voi lainata sen itselleen
+* Käyttäjä näkee listan omista lainoista, ja voi palauttaa lainan
