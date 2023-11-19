@@ -1,0 +1,30 @@
+{% if session.username %}
+<p>Olet kirjautunut nimellä {{ session.username }}
+<a href="/logout">Kirjaudu ulos</a>
+<a href="/my">Oma hylly</a> </p>
+<b>Kokoelma:</b> <br>
+<hr>
+{% for book in books %}
+Nimi: {{ book.name }} <br>
+Kirjailija: {{ book.author }} <br>
+Julkaisuvuosi: {{ book.year }} <br>
+Lainassa: {% if book.available == 1 %} kyllä {% else %} ei {% endif %}<br>
+{% if book.available == 0 %}
+<form action="/loan?id={{ book.id }}" method="POST">
+    <input type="submit" value="lainaa">
+</form>
+{% endif %}
+<hr>
+{% endfor %}
+
+
+{% else %}
+<form action="/login" method="POST">
+    <p>Tunnus:<br>
+        <input type="text" name="username"></p>
+    <p>Salasana:<br>
+    <input type="password" name="password"> </p>
+    <input type="submit" value="Kirjaudu">
+<p>Jos sinulla ei ole tunnusta, voit <a href="/register">rekisteröidä</a> sellaisen</p>
+</form>
+{% endif %}
