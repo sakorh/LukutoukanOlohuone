@@ -16,3 +16,5 @@ Lukutoukan olohuone on kaikkialla mukana kulkeva kirjasto, jossa asiakkaat voiva
 * Käyttäjä näkee etusivulla listan kirjoista
 * Jos kirja ei ole kellään lainassa, käyttäjä voi lainata sen itselleen
 * Käyttäjä näkee listan omista lainoista, ja voi palauttaa lainan
+
+## Sovellus on tällä hetkellä testattavissa vain paikallisesti.
