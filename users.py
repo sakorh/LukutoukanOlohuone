@@ -14,6 +14,7 @@ def login(username, password):
         if check_password_hash(user.password, password):
             session["user_id"] = user.id
             session["username"] = username
+            session["user_role"] = user[2]
             return True
         else:
             return False
@@ -24,11 +25,12 @@ def user_id():
 def logout():
     del session["user_id"]
     del session["username"]
+    del session["user_role"]
 
 def register(username, password):
     hash_value = generate_password_hash(password)
     try:
-        sql = "INSERT INTO users (username, password, role) VALUES (:username, :password)"
+        sql = "INSERT INTO users (username, password, role) VALUES (:username, :password, 1)"
         db.session.execute(text(sql), {"username":username, "password":hash_value})
         db.session.commit()
     except:

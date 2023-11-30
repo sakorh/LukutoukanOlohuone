@@ -59,3 +59,11 @@ def return_book():
     books.return_book(book_id)
     
     return redirect("/my")
+
+@app.route("/add_book", methods=["GET", "POST"])
+def add_book():
+    return redirect("/")
+
+@app.route("/stats", methods=["GET", "POST"])
+def stats():
+    return redirect("/")

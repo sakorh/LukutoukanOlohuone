@@ -10,7 +10,8 @@ CREATE TABLE books (
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     username TEXT,
-    password TEXT
+    password TEXT,
+    role INTEGER
 );
 
 INSERT INTO books (name, author, year, available) VALUES ('Elolliset', 'Iida Turpeinen', 2023, 0);

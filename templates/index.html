@@ -1,7 +1,11 @@
 {% if session.user_id %}
 <p>Olet kirjautunut nimellä {{ session.username }}
 <a href="/logout">Kirjaudu ulos</a>
-<a href="/my">Oma hylly</a></p>
+<a href="/my">Oma hylly</a>
+{% if session.user_role == 2 %}
+<a href="/add_book">Lisää uusi kirja</a>
+<a href="/stats">Tilastoja</a>
+{% endif %}</p>
 <b>Kokoelma:</b> <br>
 <hr>
 {% for book in books %}
