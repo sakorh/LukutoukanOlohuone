@@ -30,3 +30,8 @@ def return_book(book_id):
     sql = "UPDATE books SET available=0 WHERE id=:id"
     db.session.execute(text(sql), {"id":int(book_id)})
     db.session.commit()
+
+def add_book(name, author, year):
+    sql = "INSERT INTO books (name, author, year, available) VALUES (:name, :author, :year, 0)"
+    db.session.execute(text(sql), {"name":name, "author":author, "year":year})
+    db.session.commit()

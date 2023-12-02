@@ -36,3 +36,6 @@ def register(username, password):
     except:
         return False
     return login(username, password)
+
+def is_admin():
+    return session.get("user_role", 0) == 2

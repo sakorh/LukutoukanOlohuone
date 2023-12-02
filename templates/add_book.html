@@ -1,0 +1,13 @@
+<h2>Lisää kirja</h2>
+{% if session.user_role == 2 %}
+<form action="/add_book" method="POST">
+    <p>Nimi:<br>
+        <input type="text" name="name"></p>
+    <p>Kirjailija:<br>
+    <input type="text" name="author"></p>
+    <p>Julkaisuvuosi:<br>
+    <input type="text" name="year"></p>
+    <input type="submit" value="Lisää kokoelmaan">
+</form>
+{% endif %}
+<p>Takaisin <a href="/">etusivulle</a></p>
