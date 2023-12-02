@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect
 
 import users
 import books
@@ -7,8 +7,7 @@ import books
 @app.route("/")
 def index():
     book = books.get_books()
-    authors = books.get_authors()
-    return render_template("index.html", books=book, authors=authors) 
+    return render_template("index.html", books=book) 
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -77,6 +76,17 @@ def add_book():
         return redirect("/add_book")
     else:
         return redirect("/")
+    
+@app.route("/remove", methods=["POST"])
+def remove_book():
+    allow = False
+    if users.is_admin():
+        allow = True
+    if allow:
+        book_id = int(request.args.get("id"))
+        books.remove_book(book_id)
+    return redirect("/")
+
 
 @app.route("/stats", methods=["GET", "POST"])
 def stats():
