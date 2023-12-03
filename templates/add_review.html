@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block content %}
+<h3>Lisää arvio</h3>
+Nimi: {{ book.name }} <br>
+Kirjailija: {{ book.author }} <br>
+Julkaisuvuosi: {{ book.year }} <br>
+<form action="/post_review?id={{ book.id }}" method="POST">
+    <ul class="star-rating">
+        {% for i in range(5,0,-1) %}
+        <input type="radio" name="stars" id="{{i}}-star" value="{{i}}"><label for="{{i}}-star"></label>
+        {% endfor %}
+    </ul>
+    <p>Lisää kommentti:<br>
+        <input type="text" name="comment">
+        <input type="submit" value="lähetä">
+    </p>
+</form>
+{% endblock %}

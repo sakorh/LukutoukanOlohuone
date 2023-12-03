@@ -1,3 +1,5 @@
+{% extends "layout.html" %}
+{% block content %}
 <h3>Omat lainani</h3>
 {% for book in books %}
 {% if book.user_id == session.id %}
@@ -7,6 +9,10 @@ Julkaisuvuosi: {{ book.year }} <br>
 <form action="/return_book?id={{ book.id }}" method="POST">
     <input type="submit" value="palauta">
 </form>
+<form action="/add_review?id={{ book.id }}" method="POST">
+    <input type="submit" value="arvioi">
+</form>
 {% endif %}
 {% endfor %}
 <p>Takaisin <a href="/">etusivulle</a></p>
+{% endblock %}

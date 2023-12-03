@@ -46,3 +46,15 @@ def search(query):
         result = db.session.execute(text(sql), {"query":"%"+query+"%"})
         books = result.fetchall()
         return books
+
+def add_review(stars, comment, book_id, user_id):
+    sql = "INSERT INTO reviews (stars, comment, book_id, user_id) VALUES (:stars, :comment, :book_id, :user_id)"
+    db.session.execute(text(sql), {"stars":stars, "comment":comment, "book_id":book_id, "user_id":user_id})
+    db.session.commit()
+
+def get_book(id):
+    sql = "SELECT id, name, author, year FROM books WHERE id=:id"
+    result = db.session.execute(text(sql), {"id":id})
+    book = result.fetchone()
+    return book
+     

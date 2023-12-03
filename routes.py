@@ -93,6 +93,20 @@ def search():
     result = books.search(query)
     return render_template("index.html", books=result)
     
+@app.route("/add_review", methods=["POST"])
+def add_review():
+    book_id = int(request.args.get("id"))
+    result = books.get_book(book_id)
+    return render_template("add_review.html", book=result)
+
+@app.route("/post_review", methods=["POST"])
+def post_review():
+    book_id = int(request.args.get("id"))
+    comment = request.form["comment"]
+    stars = request.form["stars"]
+    books.add_review(stars, comment, book_id, users.user_id())
+    return redirect("/my")
+
 
 @app.route("/stats", methods=["GET", "POST"])
 def stats():

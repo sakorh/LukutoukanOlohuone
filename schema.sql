@@ -14,6 +14,13 @@ CREATE TABLE books (
     user_id INTEGER REFERENCES users
 ); 
 
+CREATE TABLE reviews (
+    id SERIAL PRIMARY KEY,
+    stars INTEGER,
+    comment TEXT,
+    book_id INTEGER REFERENCES books,
+    user_id INTEGER REFERENCES users
+)
 
 INSERT INTO books (name, author, year, available) VALUES ('Elolliset', 'Iida Turpeinen', 2023, 0);
 INSERT INTO books (name, author, year, available) VALUES ('Talo taivaansinisellä merellä', 'TJ Klune', 2021, 0);
