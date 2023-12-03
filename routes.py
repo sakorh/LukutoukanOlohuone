@@ -107,6 +107,12 @@ def post_review():
     books.add_review(stars, comment, book_id, users.user_id())
     return redirect("/my")
 
+@app.route("/reviews", methods=["POST"])
+def get_reviews():
+    book_id = int(request.args.get("id"))
+    book = books.get_book(book_id)
+    reviews = books.get_reviews(book_id)
+    return render_template("reviews.html", book=book, reviews=reviews)
 
 @app.route("/stats", methods=["GET", "POST"])
 def stats():

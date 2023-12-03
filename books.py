@@ -57,4 +57,10 @@ def get_book(id):
     result = db.session.execute(text(sql), {"id":id})
     book = result.fetchone()
     return book
-     
+
+def get_reviews(id):
+    sql = "SELECT id, stars, comment, book_id, user_id FROM reviews WHERE book_id=:book_id"
+    result = db.session.execute(text(sql), {"book_id":id})
+    reviews = result.fetchall()
+    return reviews
+    

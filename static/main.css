@@ -20,3 +20,6 @@ body {
 .star-rating > input[type="radio"]:checked ~ label {
 	color: gold;
 }
+.stars .checked {
+    color: gold;
+}

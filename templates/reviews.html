@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block content %}
+Nimi: {{ book.name }} <br>
+Kirjailija: {{ book.author }} <br>
+Julkaisuvuosi: {{ book.year }} <br>
+<h3>Arviot</h3>
+<hr>
+{% for review in reviews %}
+<ul class="stars">
+    {% for i in range(review.stars) %}
+    <span class="fa fa-star checked"></span>
+    {% endfor %}
+</ul>
+{% if review.comment %}
+Kommentti: {{ review.comment }} <br>
+{% endif %}
+<hr>
+{% endfor %}
+{% endblock %}
