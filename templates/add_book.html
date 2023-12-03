@@ -1,3 +1,5 @@
+{% extends "layout.html" %}
+{% block content %}
 <h2>Lisää kirja</h2>
 {% if session.user_role == 2 %}
 <form action="/add_book" method="POST">
@@ -11,3 +13,4 @@
 </form>
 {% endif %}
 <p>Takaisin <a href="/">etusivulle</a></p>
+{% endblock %}

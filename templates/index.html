@@ -1,5 +1,7 @@
+{% extends "layout.html" %}
+{% block content %}
 {% if session.user_id %}
-<p>Olet kirjautunut nimellä {{ session.username }}
+<p>Olet kirjautunut nimellä {{ session.username }} <br>
 <a href="/logout">Kirjaudu ulos</a>
 <a href="/my">Oma hylly</a>
 {% if session.user_role == 2 %}
@@ -33,3 +35,4 @@ Lainassa: {% if book.available == 1 %} kyllä {% else %} ei {% endif %}<br>
 {% else %}
 <a href="/login">Kirjaudu sisään</a>
 {% endif %}
+{% endblock %}

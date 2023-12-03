@@ -1,0 +1,22 @@
+body {
+    margin: auto;
+    font-family: monospace;
+    text-align: center;
+}
+
+.star-rating > input {
+    visibility: hidden;
+}
+
+.star-rating > label {
+	color: lightgrey;
+    font-size: 30px;
+}
+
+.star-rating > label:before {
+	content: "★";
+}
+
+.star-rating > input[type="radio"]:checked ~ label {
+	color: gold;
+}
