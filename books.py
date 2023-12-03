@@ -40,3 +40,9 @@ def remove_book(book_id):
     sql = "DELETE FROM books WHERE id=:id"
     db.session.execute(text(sql), {"id":int(book_id)})
     db.session.commit()
+
+def search(query):
+        sql = "SELECT id, name, author, available FROM books WHERE UPPER(name) LIKE UPPER(:query)"
+        result = db.session.execute(text(sql), {"query":"%"+query+"%"})
+        books = result.fetchall()
+        return books

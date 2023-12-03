@@ -87,6 +87,12 @@ def remove_book():
         books.remove_book(book_id)
     return redirect("/")
 
+@app.route("/search", methods=["GET","POST"])
+def search():
+    query = request.args["query"]
+    result = books.search(query)
+    return render_template("index.html", books=result)
+    
 
 @app.route("/stats", methods=["GET", "POST"])
 def stats():
