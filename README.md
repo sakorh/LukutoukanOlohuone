@@ -16,5 +16,30 @@ Lukutoukan olohuone on kaikkialla mukana kulkeva kirjasto, jossa asiakkaat voiva
 * Käyttäjä näkee etusivulla listan kirjoista
 * Jos kirja ei ole kellään lainassa, käyttäjä voi lainata sen itselleen
 * Käyttäjä näkee listan omista lainoista, ja voi palauttaa lainan
+* Käyttäjä voi antaa arvion kirjalle, jonka on lainannut
+* Käyttäjä voi lukea muiden lisäämiä arvioita
+* Ylläpitäjä voi lisätä uusia kirjoja, ja poistaa hyllyssä olevia
+* Käyttäjä voi etsiä kirjoja, joiden nimi sisältää annetun hakusanan
 
-## Sovellus on tällä hetkellä testattavissa vain paikallisesti.
+## Sovelluksen käynnistysohjeet paikalliseen testaukseen:
+* Kloonaa repositorio koneellesi ja siirry sen juurikansioon
+* Lisää kansioon ```.env```-tiedosto ja sen sisällöksi:
+  ```
+  DATABASE_URL=postgres:///username
+  SECRET_KEY=<salainen-avain>
+  ```
+* Aktivoi virtuaaliympäristö ja asenna riippuvuudet:
+  ```
+  python3 -m venv venv
+  source venv/bin/activate
+  pip install -r ./requirements.txt
+  ```
+* Määritä tietokanta:
+  ```
+  psql < schema.sql
+  ```
+* Käynnistä sovellus:
+  ```
+  flask run
+  ```
+Tietokannan määrittely lisää sovellukseen valmiiksi ylläpitäjä-käyttäjän, sillä itse sovelluksessa tunnuksen rekisteröinti luo automaattisesti asiakas-käyttäjän, jolla ei ole kaikkia ylläpitäjän toiminnallisuuksia. Sovelluksen toimintojen testausta varten ylläpitäjän käyttäjätunnus ja salasana löytyvät tiedostosta ```login.txt```.
