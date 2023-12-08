@@ -1,13 +1,16 @@
 from app import app
-from flask import render_template, request, redirect
+from flask import render_template, request, redirect, session
 
 import users
 import books
 
 @app.route("/")
 def index():
+    if session.get("author"):
+        del session["author"]
     book = books.get_books()
-    return render_template("index.html", books=book) 
+    authors = books.get_authors()
+    return render_template("index.html", books=book, authors=authors) 
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -91,7 +94,8 @@ def remove_book():
 def search():
     query = request.args["query"]
     result = books.search(query)
-    return render_template("index.html", books=result)
+    authors = books.get_authors()
+    return render_template("index.html", books=result, authors=authors)
     
 @app.route("/add_review", methods=["POST"])
 def add_review():
@@ -113,6 +117,13 @@ def get_reviews():
     book = books.get_book(book_id)
     reviews = books.get_reviews(book_id)
     return render_template("reviews.html", book=book, reviews=reviews)
+
+@app.route("/select_author", methods=["POST"])
+def select_author():
+    selected_author = request.form.get("selected_author")
+    result = books.filter_by_author(selected_author)
+    authors = books.get_authors()
+    return render_template("index.html", books=result, authors=authors)
 
 @app.route("/stats", methods=["GET", "POST"])
 def stats():

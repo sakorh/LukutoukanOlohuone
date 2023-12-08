@@ -13,6 +13,17 @@
     <input type="submit" value="Hae">
 </form>
 <br>
+<form action="/select_author" method="POST" class="input">
+    <select name="selected_author" onchange="this.form.submit()">
+        {% for author in authors %}
+        <option value="{{ author }}">{{ author }}</option>
+        {% endfor %}
+    </select>
+</form>
+{% if session.author %}
+<a href="/">Tyhjennä valinta</a>
+{% endif %}
+<br>
 <b>Kokoelma:</b> <br>
 <hr>
 {% for book in books %}
