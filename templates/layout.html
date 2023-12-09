@@ -2,5 +2,14 @@
 <link rel="stylesheet" href="/static/main.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <title>Lukutoukan Olohuone {% block title %}{% endblock %}</title>
-<h2>Lukutoukan Olohuone</h2>
+<h2><a href="/">Lukutoukan Olohuone</a></h2>
+{% if session.user_id %}
+<p>Olet kirjautunut nimellä {{ session.username }} <br>
+<a href="/logout">Kirjaudu ulos</a>
+<a href="/my">Oma hylly</a>
+{% if session.user_role == 2 %}
+<a href="/add_book">Lisää uusi kirja</a>
+<a href="/stats">Tilastoja</a>
+{% endif %}</p>
+{% endif %}
 {% block content %}{% endblock %}

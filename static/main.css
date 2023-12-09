@@ -4,8 +4,17 @@ body {
     text-align: center;
 }
 
+a {
+    text-decoration: none;
+    color: black;
+}
+.star-rating {
+    display: inline-block;
+}
+
 .star-rating > input {
-    visibility: hidden;
+    display: none;
+    float: left;
 }
 
 .star-rating > label {
@@ -17,7 +26,18 @@ body {
 	content: "★";
 }
 
-.star-rating > input[type="radio"]:checked ~ label {
+.star-rating > input ~ label {
+    float: right;
+}
+
+.star-rating > input:not(:checked) + label:hover,
+.star-rating > input:not(:checked) ~ label:hover ~ label {
+	color: gold;
+}
+
+.star-rating > input:checked ~ label:hover ~ label,
+.star-rating > input:checked + label:hover,
+.star-rating > input:checked ~ label {
 	color: gold;
 }
 .stars .checked {
