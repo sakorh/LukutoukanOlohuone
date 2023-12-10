@@ -3,10 +3,15 @@ from sqlalchemy.sql import text
 from flask import session
 import users
 
-def get_books():
-    sql = "SELECT id, name, author, year, available FROM books ORDER BY id"
-    result = db.session.execute(text(sql))
-    books = result.fetchall()
+def get_books(wish):
+    if wish == 0:
+        sql = "SELECT id, name, author, year, available FROM books WHERE wish=:wish ORDER BY id"
+        result = db.session.execute(text(sql), {"wish":wish})
+        books = result.fetchall()
+    if wish == 1:
+        sql = "SELECT b.id, b.name, b.author, b.year, COUNT(w.id) FROM books b LEFT JOIN wishes w ON b.id=w.book_id WHERE b.wish=:wish GROUP BY b.id"
+        result = db.session.execute(text(sql), {"wish":wish})
+        books = result.fetchall()
     return books
     
 
@@ -33,7 +38,7 @@ def return_book(book_id):
     db.session.commit()
 
 def add_book(name, author, year):
-    sql = "INSERT INTO books (name, author, year, available) VALUES (:name, :author, :year, 0)"
+    sql = "INSERT INTO books (name, author, year, available, wish) VALUES (:name, :author, :year, 0, 0)"
     db.session.execute(text(sql), {"name":name, "author":author, "year":year})
     db.session.commit()
 
@@ -45,11 +50,11 @@ def remove_book(book_id):
 def search(query):
         if session.get("author"):
             author = session["author"]
-            sql = "SELECT id, name, author, year, available FROM books WHERE (UPPER(name) LIKE UPPER(:query) AND author LIKE :author)"
+            sql = "SELECT id, name, author, year, available FROM books WHERE (UPPER(name) LIKE UPPER(:query) AND author LIKE :author AND wish=0)"
             result = db.session.execute(text(sql), {"query":"%"+query+"%", "author":author})
             books = result.fetchall()
         else:
-            sql = "SELECT id, name, author, year, available FROM books WHERE UPPER(name) LIKE UPPER(:query)"
+            sql = "SELECT id, name, author, year, available FROM books WHERE (UPPER(name) LIKE UPPER(:query) AND wish=0)"
             result = db.session.execute(text(sql), {"query":"%"+query+"%"})
             books = result.fetchall()
         return books
@@ -72,7 +77,7 @@ def get_reviews(id):
     return reviews
 
 def get_authors():
-    sql = "SELECT DISTINCT author FROM books"
+    sql = "SELECT DISTINCT author FROM books WHERE wish=0"
     result = db.session.execute(text(sql))
     authors = result.fetchall()
     authors = [str(author).strip("(',)") for author in authors]
@@ -89,3 +94,18 @@ def filter_by_author(author):
     result = db.session.execute(text(sql), {"author":author})
     book_list = result.fetchall()
     return book_list
+
+def add_wish(name, author, year):
+    sql = "INSERT INTO books (name, author, year, available, wish) VALUES (:name, :author, :year, 0, 1)"
+    db.session.execute(text(sql), {"name":name, "author":author, "year":year})
+    db.session.commit()
+    sql = "SELECT MAX(id) FROM books"
+    result = db.session.execute(text(sql))
+    book_id = result.fetchone()[0]
+    add_vote(book_id)
+
+def add_vote(book_id):
+    user_id = users.user_id()
+    sql = "INSERT INTO wishes (book_id, user_id) VALUES (:book_id, :user_id)"
+    db.session.execute(text(sql), {"book_id":book_id, "user_id":user_id})
+    db.session.commit()

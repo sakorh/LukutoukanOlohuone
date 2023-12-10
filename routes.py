@@ -8,7 +8,7 @@ import books
 def index():
     if session.get("author"):
         del session["author"]
-    book = books.get_books()
+    book = books.get_books(0)
     authors = books.get_authors()
     return render_template("index.html", books=book, authors=authors) 
 
@@ -125,6 +125,24 @@ def select_author():
     authors = books.get_authors()
     return render_template("index.html", books=result, authors=authors)
 
+@app.route("/add_wish", methods=["GET","POST"])
+def add_wish():
+    wishes = books.get_books(1)
+    if request.method == "GET":
+        return render_template("wishes.html", wishes=wishes)
+    if request.method == "POST":
+        name = request.form["name"]
+        author = request.form["author"]
+        year = int(request.form["year"])
+        books.add_wish(name, author, year)
+        return redirect("/add_wish")
+    
+@app.route("/add_vote", methods=["POST"])
+def add_vote():
+    book_id = request.form["vote"]
+    books.add_vote(book_id)
+    return redirect("/add_wish")
+    
 @app.route("/stats", methods=["GET", "POST"])
 def stats():
     return redirect("/")

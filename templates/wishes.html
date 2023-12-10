@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block content %}
+{% if session.user_id %}
+<h2>Kirjatoiveet</h2>
+<form action="/add_vote" method="POST">
+    {% for book in wishes %}
+    <input type="radio" name="vote" value="{{ book.id }}"> {{ book.name }}, {{ book.author }}, {{ book.year }},
+    äänet: {{ book.count }}<br>
+    {% endfor %}
+    <br>
+    <input type="submit" value="äänestä">
+</form>
+<br>
+<form action="/add_wish" method="POST">
+    <b>Lisää uusi toive: </b>
+    <p>Nimi:<br>
+    <input type="text" name="name"></p>
+    <p>Kirjailija:<br>
+    <input type="text" name="author"></p>
+    <p>Julkaisuvuosi:<br>
+    <input type="text" name="year"></p>
+    <input type="submit" value="lisää toive">
+</form>
+{% endif %}
+{% endblock %}
