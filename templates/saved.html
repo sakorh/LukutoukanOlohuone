@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block content %}
+{% if session.user_id %}
+<h3>Tallennetut kirjat</h3>
+{% for book in books %}
+{% if book.user_id == session.id %}
+Nimi: {{ book.name }} <br>
+Kirjailija: {{ book.author }} <br>
+Julkaisuvuosi: {{ book.year }} <br>
+Lainassa: {% if book.available == 1 %} kyllä {% else %} ei {% endif %}<br>
+{% if book.available == 0 %}
+<form action="/loan?id={{ book.id }}" method="POST">
+    <input type="submit" value="lainaa">
+</form>
+{% endif %}
+<form action="/reviews?id={{ book. id }}" method="POST">
+    <input type="submit" value="arviot">
+</form>
+<form action="/remove_saved?id={{ book.id }}" method="POST">
+    <input type="submit" value="poista tallennetuista">
+</form>
+<hr>
+{% endif %}
+{% endfor %}
+{% endif %}
+<p>Takaisin <a href="/">etusivulle</a></p>
+{% endblock %}

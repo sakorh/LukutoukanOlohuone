@@ -10,7 +10,8 @@ def index():
         del session["author"]
     book = books.get_books(0)
     authors = books.get_authors()
-    return render_template("index.html", books=book, authors=authors) 
+    saved_ids = [b[0] for b in books.get_saved()]
+    return render_template("index.html", books=book, authors=authors, saved=saved_ids) 
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -54,7 +55,8 @@ def loan():
 @app.route("/my", methods=["GET","POST"])
 def my():
     book = books.my_books()
-    return render_template("my.html", books=book) 
+    saved_ids = [b[0] for b in books.get_saved()]
+    return render_template("my.html", books=book, saved=saved_ids) 
 
 @app.route("/return_book", methods=["GET", "POST"])
 def return_book():
@@ -143,6 +145,22 @@ def add_vote():
     books.add_vote(book_id)
     return redirect("/add_wish")
     
+@app.route("/saved", methods=["GET","POST"])
+def save_book():
+    saved = books.get_saved()
+    if request.method == "GET":
+        return render_template("saved.html", books=saved)
+    if request.method == "POST":
+        book_id = int(request.args.get("id"))
+        books.save(book_id)
+        return redirect("/")
+    
+@app.route("/remove_saved", methods=["POST"])
+def remove_saved():
+    book_id = int(request.args.get("id"))
+    books.remove_saved(book_id)
+    return redirect("/saved")
+
 @app.route("/stats", methods=["GET", "POST"])
 def stats():
     return redirect("/")

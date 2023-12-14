@@ -9,7 +9,8 @@ def get_books(wish):
         result = db.session.execute(text(sql), {"wish":wish})
         books = result.fetchall()
     if wish == 1:
-        sql = "SELECT b.id, b.name, b.author, b.year, COUNT(w.id) FROM books b LEFT JOIN wishes w ON b.id=w.book_id WHERE b.wish=:wish GROUP BY b.id"
+        sql = """SELECT b.id, b.name, b.author, b.year, COUNT(w.id) FROM books b 
+        JOIN wishes w ON b.id=w.book_id GROUP BY b.id"""
         result = db.session.execute(text(sql), {"wish":wish})
         books = result.fetchall()
     return books
@@ -50,7 +51,8 @@ def remove_book(book_id):
 def search(query):
         if session.get("author"):
             author = session["author"]
-            sql = "SELECT id, name, author, year, available FROM books WHERE (UPPER(name) LIKE UPPER(:query) AND author LIKE :author AND wish=0)"
+            sql = """SELECT id, name, author, year, available FROM books WHERE (UPPER(name) 
+            LIKE UPPER(:query) AND author LIKE :author AND wish=0)"""
             result = db.session.execute(text(sql), {"query":"%"+query+"%", "author":author})
             books = result.fetchall()
         else:
@@ -107,5 +109,25 @@ def add_wish(name, author, year):
 def add_vote(book_id):
     user_id = users.user_id()
     sql = "INSERT INTO wishes (book_id, user_id) VALUES (:book_id, :user_id)"
+    db.session.execute(text(sql), {"book_id":book_id, "user_id":user_id})
+    db.session.commit()
+
+def save(book_id):
+    user_id = users.user_id()
+    sql = "INSERT INTO saved (book_id, user_id) VALUES (:book_id, :user_id)"
+    db.session.execute(text(sql), {"book_id":book_id, "user_id":user_id})
+    db.session.commit()
+
+def get_saved():
+    user_id = users.user_id()
+    sql = """SELECT b.id, b.name, b.author, b.year, b.available FROM books b 
+    JOIN saved s ON b.id=s.book_id WHERE s.user_id=:user_id"""
+    result = db.session.execute(text(sql), {"user_id":user_id})
+    books = result.fetchall()
+    return books
+
+def remove_saved(book_id):
+    user_id = users.user_id()
+    sql = "DELETE FROM saved WHERE book_id=:book_id AND user_id=:user_id"
     db.session.execute(text(sql), {"book_id":book_id, "user_id":user_id})
     db.session.commit()

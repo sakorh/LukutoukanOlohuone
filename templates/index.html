@@ -37,6 +37,11 @@ Lainassa: {% if book.available == 1 %} kyllä {% else %} ei {% endif %}<br>
 <form action="/reviews?id={{ book. id }}" method="POST">
     <input type="submit" value="arviot">
 </form>
+{% if book.id not in saved %}
+<form action="/saved?id={{ book.id }}" method="POST">
+    <input type="submit" value="tallenna">
+</form>
+{% endif %}
 <hr>
 {% endfor %}
 {% else %}
