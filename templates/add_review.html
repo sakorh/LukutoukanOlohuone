@@ -11,8 +11,9 @@ Julkaisuvuosi: {{ book.year }} <br>
         {% endfor %}
     </ul>
     <p>Lisää kommentti:<br>
-        <input type="text" name="comment">
+        <textarea name="kommentti" maxlength="1000"></textarea>
         <input type="submit" value="lähetä">
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
     </p>
 </form>
 <a href="/my">Takaisin lainoihin</a>

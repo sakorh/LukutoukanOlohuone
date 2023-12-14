@@ -10,6 +10,7 @@
     <p>Julkaisuvuosi:<br>
     <input type="text" name="year"></p>
     <input type="submit" value="Lisää kokoelmaan">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 {% endif %}
 <p>Takaisin <a href="/">etusivulle</a></p>

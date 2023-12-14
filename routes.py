@@ -35,21 +35,20 @@ def logout():
 def register():
     if request.method == "GET":
         return render_template("register.html")
-    
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
         if users.register(username, password):
-            return redirect("/")
+            return redirect("/login")
         else:
             return render_template("error.html", message="Rekisteröinti ei onnistunut. Tunnus on jo käytössä.")
 
-@app.route("/loan", methods=["GET", "POST"])
+@app.route("/loan", methods=["POST"])
 def loan():
+    users.check_csrf()
     user_id = users.user_id()
     book_id = int(request.args.get("id"))
     books.loan_book(book_id, user_id)
-
     return redirect("/")
 
 @app.route("/my", methods=["GET","POST"])
@@ -60,6 +59,7 @@ def my():
 
 @app.route("/return_book", methods=["GET", "POST"])
 def return_book():
+    users.check_csrf()
     book_id = int(request.args.get("id"))
     books.return_book(book_id)
     
@@ -74,6 +74,7 @@ def add_book():
         if request.method == "GET":
             return render_template("add_book.html")
         if request.method == "POST":
+            users.check_csrf()
             name = request.form["name"]
             author = request.form["author"]
             year = int(request.form["year"])
@@ -88,6 +89,7 @@ def remove_book():
     if users.is_admin():
         allow = True
     if allow:
+        users.check_csrf()
         book_id = int(request.args.get("id"))
         books.remove_book(book_id)
     return redirect("/")
@@ -107,6 +109,7 @@ def add_review():
 
 @app.route("/post_review", methods=["POST"])
 def post_review():
+    users.check_csrf()
     book_id = int(request.args.get("id"))
     comment = request.form["comment"]
     stars = request.form["stars"]
@@ -133,6 +136,7 @@ def add_wish():
     if request.method == "GET":
         return render_template("wishes.html", wishes=wishes)
     if request.method == "POST":
+        users.check_csrf()
         name = request.form["name"]
         author = request.form["author"]
         year = int(request.form["year"])
@@ -141,6 +145,7 @@ def add_wish():
     
 @app.route("/add_vote", methods=["POST"])
 def add_vote():
+    users.check_csrf()
     book_id = request.form["vote"]
     books.add_vote(book_id)
     return redirect("/add_wish")
@@ -151,12 +156,14 @@ def save_book():
     if request.method == "GET":
         return render_template("saved.html", books=saved)
     if request.method == "POST":
+        users.check_csrf()
         book_id = int(request.args.get("id"))
         books.save(book_id)
         return redirect("/")
     
 @app.route("/remove_saved", methods=["POST"])
 def remove_saved():
+    users.check_csrf()
     book_id = int(request.args.get("id"))
     books.remove_saved(book_id)
     return redirect("/saved")

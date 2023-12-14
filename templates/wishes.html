@@ -9,6 +9,7 @@
     {% endfor %}
     <br>
     <input type="submit" value="äänestä">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 <br>
 <form action="/add_wish" method="POST">
@@ -20,6 +21,7 @@
     <p>Julkaisuvuosi:<br>
     <input type="text" name="year"></p>
     <input type="submit" value="lisää toive">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 {% endif %}
 {% endblock %}

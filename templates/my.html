@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
+{% if session.user_id %}
 <h3>Omat lainani</h3>
 {% for book in books %}
 {% if book.user_id == session.id %}
@@ -8,16 +9,20 @@ Kirjailija: {{ book.author }} <br>
 Julkaisuvuosi: {{ book.year }} <br>
 <form action="/return_book?id={{ book.id }}" method="POST">
     <input type="submit" value="palauta">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 <form action="/add_review?id={{ book.id }}" method="POST">
     <input type="submit" value="arvioi">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 {% if book.id not in saved %}
 <form action="/saved?id={{ book.id }}" method="POST">
     <input type="submit" value="tallenna">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 {% endif %}
 {% endif %}
 {% endfor %}
 <p>Takaisin <a href="/">etusivulle</a></p>
+{% endif %}
 {% endblock %}
