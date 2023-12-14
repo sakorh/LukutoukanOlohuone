@@ -108,7 +108,8 @@ def add_wish(name, author, year):
 
 def add_vote(book_id):
     user_id = users.user_id()
-    sql = "INSERT INTO wishes (book_id, user_id) VALUES (:book_id, :user_id)"
+    sql = """INSERT INTO wishes (book_id, user_id) SELECT :book_id, :user_id
+    WHERE NOT EXISTS (SELECT book_id, user_id FROM wishes WHERE book_id=:book_id AND user_id=:user_id)"""
     db.session.execute(text(sql), {"book_id":book_id, "user_id":user_id})
     db.session.commit()
 
