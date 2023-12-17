@@ -2,16 +2,6 @@
 Lukutoukan olohuone on kaikkialla mukana kulkeva kirjasto, jossa asiakkaat voivat lainata, palauttaa ja arvioida hyllystä löytyviä kirjoja. Kokoelmaan voi myös toivoa uusia teoksia, jotka sovelluksen ylläpitäjä voi lisätä, mikäli halukkaita lukijoita on tarpeeksi. 
 
 ## Sovelluksen ominaisuudet:
-* Käyttäjä voi kirjautua sisään ja ulos, ja luoda uuden tunnuksen
-* Asiakas näkee listan hyllyssä olevista kirjoista ja voi lainata (ja palauttaa) kirjoja
-* Asiakas voi antaa arvion kirjalle ja lukea muiden kirjoittamia arvioita
-* Asiakas voi tallentaa kirjan omaan kirjahyllyynsä
-* Asiakas voi toivoa uutta kirjaa lainattavaksi tai äänestää jonkun toisen toivomaa kirjaa
-* Asiakas voi etsiä kaikki kirjat, joiden nimessä on annettu sana, tai valita nähtäväkseen vain jonkun tietyn kirjailijan kirjat
-* Ylläpitäjä voi poistaa ja lisätä uusia kirjoja hyllyyn
-* Ylläpitäjä voi nähdä tilaston kirjojen lainausmääristä
-
-## Sovelluksessa on tällä hetkellä seuraavat toiminnot:
 * Käyttäjä voi kirjautua sisään ja ulos, ja rekisteröidä uuden tunnuksen
 * Käyttäjä näkee etusivulla listan kirjoista
 * Jos kirja ei ole kellään lainassa, käyttäjä voi lainata sen itselleen
@@ -20,6 +10,10 @@ Lukutoukan olohuone on kaikkialla mukana kulkeva kirjasto, jossa asiakkaat voiva
 * Käyttäjä voi lukea muiden lisäämiä arvioita
 * Ylläpitäjä voi lisätä uusia kirjoja, ja poistaa hyllyssä olevia
 * Käyttäjä voi etsiä kirjoja, joiden nimi sisältää annetun hakusanan
+* Käyttäjä voi rajata kirjoja kirjailijan perusteella
+* Käyttäjä voi toivoa uutta kirjaa lisättäväksi hyllyyn, ja äänestää muiden toiveita
+* Käyttäjä voi tallentaa kirjan lukulistalleen
+* Ylläpitäjä voi nähdä tilaston kirjojen lainausmääristä
 
 ## Sovelluksen käynnistysohjeet paikalliseen testaukseen:
 * Kloonaa repositorio koneellesi ja siirry sen juurikansioon
