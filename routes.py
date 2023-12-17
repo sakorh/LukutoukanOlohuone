@@ -3,6 +3,7 @@ from flask import render_template, request, redirect, session
 
 import users
 import books
+import stats
 
 @app.route("/")
 def index():
@@ -168,6 +169,12 @@ def remove_saved():
     books.remove_saved(book_id)
     return redirect("/saved")
 
-@app.route("/stats", methods=["GET", "POST"])
-def stats():
-    return redirect("/")
+@app.route("/stats")
+def show_stats():
+    allow = False
+    if users.is_admin():
+        allow = True
+    if allow:
+        loan_data = stats.loan_stats()
+        rating_data = stats.rating_stats()
+    return render_template("stats.html", loan_data=loan_data, rating_data=rating_data)

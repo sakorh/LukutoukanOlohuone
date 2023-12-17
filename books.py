@@ -23,6 +23,9 @@ def loan_book(book_id, user_id):
     sql = "UPDATE books SET available=1 WHERE id=:id"
     db.session.execute(text(sql), {"id":int(book_id)})
     db.session.commit()
+    sql = "INSERT INTO stats (book_id, user_id) VALUES (:book_id, :user_id)"
+    db.session.execute(text(sql), {"book_id":int(book_id), "user_id":user_id})
+    db.session.commit()
 
 def my_books():
     sql = "SELECT id, name, author, year, available FROM books WHERE user_id=:user_id ORDER BY id"
@@ -64,6 +67,12 @@ def search(query):
 def add_review(stars, comment, book_id, user_id):
     sql = "INSERT INTO reviews (stars, comment, book_id, user_id) VALUES (:stars, :comment, :book_id, :user_id)"
     db.session.execute(text(sql), {"stars":stars, "comment":comment, "book_id":book_id, "user_id":user_id})
+    db.session.commit()
+    sql = "SELECT MAX(id) FROM reviews"
+    result = db.session.execute(text(sql))
+    review_id = result.fetchone()[0]
+    sql = "INSERT INTO stats (book_id, reviews_id) VALUES (:book_id, :review_id)"
+    db.session.execute(text(sql), {"book_id":book_id, "reviews_id":review_id})
     db.session.commit()
 
 def get_book(id):

@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block content %}
+{% if session.user_role == 2 %}
+<h3>Tilastoja</h3>
+{% for book in loan_data %}
+{{ book.name }}, {{ book.author }}<br>
+Lainattu {{ book.count }} kertaa.<br>
+{% for rating in rating_data %}
+{% if rating.id == book.id %}
+Keskimääräinen arvio: {{ rating.avg }}
+{% endif %}
+{% endfor %}
+<hr>
+{% endfor %}
+{% endif %}
+{% endblock %}
