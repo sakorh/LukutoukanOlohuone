@@ -3,7 +3,7 @@ from sqlalchemy.sql import text
 
 def loan_stats():
     sql = """SELECT COUNT(s.book_id), b.id, b.name, b.author FROM stats s 
-    JOIN books b ON s.book_id=b.id GROUP BY s.book_id, b.id, b.name, b.author"""
+    RIGHT JOIN books b ON s.book_id=b.id WHERE b.wish=0 GROUP BY s.book_id, b.id, b.name, b.author"""
     result = db.session.execute(text(sql))
     stats = result.fetchall()
     return stats

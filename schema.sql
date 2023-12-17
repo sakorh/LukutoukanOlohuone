@@ -36,6 +36,7 @@ CREATE TABLE saved (
 
 CREATE TABLE stats (
     book_id INTEGER REFERENCES books,
+    user_id INTEGER REFERENCES users,
     reviews_id INTEGER REFERENCES reviews
 );
 

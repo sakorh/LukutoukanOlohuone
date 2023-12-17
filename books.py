@@ -72,7 +72,7 @@ def add_review(stars, comment, book_id, user_id):
     result = db.session.execute(text(sql))
     review_id = result.fetchone()[0]
     sql = "INSERT INTO stats (book_id, reviews_id) VALUES (:book_id, :review_id)"
-    db.session.execute(text(sql), {"book_id":book_id, "reviews_id":review_id})
+    db.session.execute(text(sql), {"book_id":book_id, "review_id":review_id})
     db.session.commit()
 
 def get_book(id):

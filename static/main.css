@@ -4,8 +4,11 @@ body {
     text-align: center;
 }
 
-a {
+.title + a {
     text-decoration: none;
+    color: black;
+}
+a {
     color: black;
 }
 .star-rating {

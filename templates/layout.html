@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="/static/main.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <title>Lukutoukan Olohuone {% block title %}{% endblock %}</title>
-<h2><a href="/">Lukutoukan Olohuone</a></h2>
+<h2><div class="title"></div><a href="/">Lukutoukan Olohuone</a></div></h2>
 {% if session.user_id %}
 <p>Olet kirjautunut nimellä {{ session.username }} <br>
 <a href="/logout">Kirjaudu ulos</a>
